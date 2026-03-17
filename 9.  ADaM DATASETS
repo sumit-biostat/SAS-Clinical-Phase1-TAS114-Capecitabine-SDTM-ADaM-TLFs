@@ -1,0 +1,104 @@
+/* ADaM DATASETS  ADSL (Subject Level)*/
+
+data proj.adsl;
+    set proj.sdtm_dm;
+    SAFFL = "Y"; /* Safety population */
+run;
+
+/*ADAE (Adverse Events)*/
+
+data proj.adae;
+    set proj.sdtm_ae;
+
+    /* Severity Numeric */
+    if AESEV = "MILD" then ASEVN = 1;
+    else if AESEV = "MODERATE" then ASEVN = 2;
+    else if AESEV = "SEVERE" then ASEVN = 3;
+
+    /* Serious Flag */
+    if AESER = "Y" then SERFL = "Y";
+    else SERFL = "N";
+run;
+
+/*ADVS (Vital Signs)*/
+
+data proj.advs;
+    set proj.sdtm_vs;
+
+    /* Example baseline flag */
+    if _n_ = 1 then BASEFL = "Y";
+    else BASEFL = "N";
+run;
+
+/*PK ANALYSIS
+  Cmax & Tmax*/
+
+proc sql;
+    create table proj.pk_analysis as
+    select usubjid,
+           max(conc) as CMAX,
+           time as TMAX
+    from proj.pk
+    group by usubjid;
+quit;
+
+/*PK Summary*/
+
+proc means data=proj.pk mean max min;
+    var conc;
+run;
+
+/*PK Plot*/
+
+proc sgplot data=proj.pk;
+    series x=time y=conc / group=usubjid;
+    title "Concentration-Time Profile";
+run;
+
+./* SAFETY ANALYSIS*/
+/* AE Summary*/
+
+proc freq data=proj.adae;
+    tables AETERM*AESEV / nocol norow;
+    title "Adverse Events Summary";
+run;
+
+/*Serious AE*/
+
+proc freq data=proj.adae;
+    tables SERFL;
+    title "Serious Adverse Events";
+run;
+
+/*LAB ANALYSIS*/
+
+proc means data=proj.sdtm_lb mean min max;
+    var LBSTRESN;
+    class LBTEST;
+run;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
