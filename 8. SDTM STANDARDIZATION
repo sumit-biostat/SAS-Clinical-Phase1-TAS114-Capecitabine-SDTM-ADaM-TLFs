@@ -1,0 +1,25 @@
+ SDTM STANDARDIZATION
+
+/* DM Domain */
+data proj.sdtm_dm;
+    set proj.dm;
+    DOMAIN = "DM";
+run;
+
+/* AE Domain */
+data proj.sdtm_ae;
+    set proj.ae;
+    DOMAIN = "AE";
+run;
+
+/* LB Domain */
+data proj.sdtm_lb;
+    set proj.lb;
+    DOMAIN = "LB";
+run;
+
+/* VS Domain */
+data proj.sdtm_vs;
+    set proj.vs;
+    DOMAIN = "VS";
+run;
