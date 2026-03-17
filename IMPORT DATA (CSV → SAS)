@@ -1,0 +1,34 @@
+IMPORT DATA (CSV → SAS)
+
+/* Set path */
+libname proj "C:\SAS_Project";
+
+/* Import DM */
+proc import datafile="C:\SAS_Project\dm.csv"
+    out=proj.dm dbms=csv replace;
+    guessingrows=max;
+run;
+
+/* Import AE */
+proc import datafile="C:\SAS_Project\ae.csv"
+    out=proj.ae dbms=csv replace;
+    guessingrows=max;
+run;
+
+/* Import LB */
+proc import datafile="C:\SAS_Project\lb.csv"
+    out=proj.lb dbms=csv replace;
+    guessingrows=max;
+run;
+
+/* Import VS */
+proc import datafile="C:\SAS_Project\vs.csv"
+    out=proj.vs dbms=csv replace;
+    guessingrows=max;
+run;
+
+/* Import PK */
+proc import datafile="C:\SAS_Project\pk.csv"
+    out=proj.pk dbms=csv replace;
+    guessingrows=max;
+run;
