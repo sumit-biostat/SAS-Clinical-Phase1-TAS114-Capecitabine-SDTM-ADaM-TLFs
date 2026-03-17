@@ -1,0 +1,32 @@
+/*TLF GENERATION*/
+
+/*Table*/
+
+proc report data=proj.adsl nowd;
+    column USUBJID AGE SEX ARM;
+    title "Demographic Table";
+run;
+
+
+/* Listing*/
+
+proc print data=proj.adae;
+    title "Adverse Event Listing";
+run;
+
+/*Figure*/
+
+proc sgplot data=proj.advs;
+    vbox VSSTRESN / category=VSTEST;
+    title "Vital Signs Distribution";
+run;
+
+/*QC CHECK*/
+
+proc compare base=proj.sdtm_ae compare=proj.adae;
+run;
+
+
+
+
+
